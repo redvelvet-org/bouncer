@@ -6,19 +6,31 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false
     },
-    name: {
-      type: DataTypes.STRING
+    firstName: {
+      type: DataTypes.STRING,
+      field: 'first_name'
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      field: 'last_name'
     },
     email: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+      allowNull: false
+    },
+    hash: {
       type: DataTypes.STRING
+    },
+    createdAt: { type: DataTypes.DATE, field: 'created_at' },
+    updatedAt: { type: DataTypes.DATE, field: 'updated_at' },
+    deletedAt: { type: DataTypes.DATE, field: 'deleted_at' }
+  };
+  const classMethods = {
+    associate: (models, klass) => {
+      klass.hasMany(models.Todo);
     }
   };
-
-  const classMethods = {
-    assosciate: (models, instance) => {
-    }, //eslint-disable-line
-  };
-
   return sequelize.define('User', fields, {
     paranoid: true,
     tableName: 'users',
