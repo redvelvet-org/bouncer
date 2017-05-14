@@ -3,7 +3,7 @@ const swagger = require('hapi-swagger');
 
 const options = {
   info: {
-    'title': 'bouncer API Docs',
+    'title': 'Bouncer API Docs',
     'version': pack.version
   }
 };

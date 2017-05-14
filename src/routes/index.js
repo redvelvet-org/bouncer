@@ -1,5 +1,5 @@
-const hello = require('./hello');
+const auth = require('./auth');
 
-const routes = [...[], hello];
+const routes = [...[], auth];
 
 module.exports = routes;
