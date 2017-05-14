@@ -6,7 +6,6 @@ const validFirstName = Joi.string().alphanum().min(3).max(30);
 const validLastName = Joi.string().alphanum().min(3).max(30);
 const validPassword = Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/);
 
-
 const login = {
   description: 'Login API',
   notes: 'User login action',

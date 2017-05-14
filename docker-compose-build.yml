@@ -33,5 +33,5 @@ services:
       - postgresql
     environment:
       - NODE_ENV=testing
-      - DATABASE_URI=postgres://bouncer@postgresql/bouncer_testing
+      - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_testing
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
