@@ -3,18 +3,11 @@
 [![Build Status](https://travis-ci.org/redvelvet-org/bouncer.svg?branch=develop)](https://travis-ci.org/redvelvet-org/bouncer)
 
 
-An API Microservice built using [Hapi](https://hapijs.com/)
-
-### Motivation
-
-When working on large NodeJS applications there is a problem of maintaining a good project structure. bouncer is a simple boiler plate to start of with a maintainable API project.
+An API Gateway server
 
 ### Features
 
-- Dockerized environments
-- API Documentation using Swagger
-- API validation using Joi
-- Sequelize ORM & Postgres DB
-- Ava test suite
-- Logger using Bunyan
-- Build template to use with Travis
+- Authentication
+- Authorisation
+- Work with Hajar
+
