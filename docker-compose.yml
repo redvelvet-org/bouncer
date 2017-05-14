@@ -62,3 +62,16 @@ services:
     command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
     ports:
       - "6006:6006"
+  test:
+    volumes:
+      - .:/usr/src/app
+    build:
+      context: .
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    environment:
+      - NODE_ENV=testing
+      - DATABASE_URI=postgres://bouncer@postgresql/bouncer_testing
+      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
