@@ -1,0 +1,44 @@
+{
+  "name": "bouncer",
+  "version": "1.0.0",
+  "description": "bouncer backend",
+  "main": "index.js",
+  "repository": "git@github.com:redvelvet-org/bouncer.git",
+  "author": "Anoop Varghese",
+  "license": "CC-BY-NC-4.0",
+  "dependencies": {
+    "bunyan": "^1.8.10",
+    "hapi": "^16.1.1",
+    "hapi-bunyan": "^0.7.0",
+    "hapi-swagger": "^7.7.0",
+    "inert": "^4.2.0",
+    "joi": "^10.4.1",
+    "pg": "^6.1.5",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0",
+    "vision": "^4.1.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "./node_modules/.bin/eslint src",
+    "db:migrate": "./node_modules/.bin/sequelize --config src/config/db.js db:migrate",
+    "db:migration": "./node_modules/.bin/sequelize migration:create --config src/config/db.js",
+    "db:setup": "./src/bin/initialize && yarn run db:migrate",
+    "db:reset": "./src/bin/reset",
+    "spec": "./node_modules/.bin/ava ava test --tap | tap-nyan",
+    "test": "nyc yarn spec",
+    "build:test": "yarn run db:setup && yarn run test"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "nyc": "^10.3.0",
+    "sinon": "^2.1.0",
+    "tap-nyan": "^1.1.0"
+  }
+}

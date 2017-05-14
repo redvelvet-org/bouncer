@@ -1,0 +1,39 @@
+version: '2'
+services:
+  postgresql:
+    image: postgres:9.5
+    command: postgres
+    volumes:
+      - ./migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "6666:5432"
+  web:
+    environment:
+      - PORT=2002
+      - NODE_ENV=development
+      - DATABASE_URI=postgres://bouncer@postgresql/bouncer_development
+      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+    volumes:
+      - .:/usr/src/app
+    build:
+      context: .
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
+    ports:
+      - "2002:2002"
+  test:
+    volumes:
+      - .:/usr/src/app
+    build:
+      context: .
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    environment:
+      - NODE_ENV=testing
+      - DATABASE_URI=postgres://bouncer@postgresql/bouncer_testing
+      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1

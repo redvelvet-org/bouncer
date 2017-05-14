@@ -1,0 +1,8 @@
+- [x] Define docker files
+- [x] Configure Hapi
+- [x] Configure eslint
+- [x] Configure logger
+- [x] Configure joi & swagger
+- [x] Configure sequelize
+- [x] Configure test
+- [ ] Use NATS for async
