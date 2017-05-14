@@ -6,10 +6,44 @@ services:
     volumes:
       - ./migrations:/docker-entrypoint-initdb.d
     ports:
-      - "6666:5432"
+      - "5439:5432"
+  hajar:
+    environment:
+      - PORT=6001
+      - NODE_ENV=development
+      - DATABASE_URI=postgres://hajar@postgresql/bouncer_development
+      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+    volumes:
+      - ../hajar:/usr/src/app
+    build:
+      context: ../hajar
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
+    ports:
+      - "6001:6001"
+  api:
+    environment:
+      - PORT=6002
+      - NODE_ENV=development
+      - DATABASE_URI=postgres://hajar@postgresql/bouncer_development
+      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+    volumes:
+      - ../red-api:/usr/src/app
+    build:
+      context: ../red-api
+    links:
+      - postgresql
+    depends_on:
+      - postgresql
+    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
+    ports:
+      - "6002:6002"
   web:
     environment:
-      - PORT=2002
+      - PORT=6006
       - NODE_ENV=development
       - DATABASE_URI=postgres://bouncer@postgresql/bouncer_development
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
@@ -19,21 +53,12 @@ services:
       context: .
     links:
       - postgresql
+      - hajar
+      - api
     depends_on:
       - postgresql
+      - hajar
+      - api
     command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
     ports:
-      - "2002:2002"
-  test:
-    volumes:
-      - .:/usr/src/app
-    build:
-      context: .
-    links:
-      - postgresql
-    depends_on:
-      - postgresql
-    environment:
-      - NODE_ENV=testing
-      - DATABASE_URI=postgres://bouncer@postgresql/bouncer_testing
-      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+      - "6006:6006"
