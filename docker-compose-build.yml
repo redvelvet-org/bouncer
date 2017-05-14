@@ -5,23 +5,8 @@ services:
     command: postgres
     volumes:
       - ./migrations:/docker-entrypoint-initdb.d
-  web:
-    environment:
-      - PORT=6006
-      - NODE_ENV=development
-      - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_development
-      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
-    volumes:
-      - .:/usr/src/app
-    build:
-      context: .
-    links:
-      - postgresql
-    depends_on:
-      - postgresql
-    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
-    ports:
-      - "6006:6006"
+  redis:
+    image: redis
   test:
     volumes:
       - .:/usr/src/app
@@ -29,9 +14,13 @@ services:
       context: .
     links:
       - postgresql
+      - redis
     depends_on:
       - postgresql
+      - redis
     environment:
       - NODE_ENV=testing
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_testing
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=123d1553cr3t

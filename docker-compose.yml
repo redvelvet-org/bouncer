@@ -7,6 +7,10 @@ services:
       - ./migrations:/docker-entrypoint-initdb.d
     ports:
       - "5439:5432"
+  redis:
+    image: redis
+    ports:
+      - "6079:6379"
   hajar:
     environment:
       - PORT=6001
@@ -48,6 +52,8 @@ services:
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_development
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
       - AUTH_SECRET_KEY=super-secret
+      - REDIS_URL=redis://redis:6379
+      - REDIS_SECRET_KEY=i23d1553cr3t
     volumes:
       - .:/usr/src/app
     build:
@@ -56,10 +62,12 @@ services:
       - postgresql
       - hajar
       - api
+      - redis
     depends_on:
       - postgresql
       - hajar
       - api
+      - redis
     command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
     ports:
       - "6006:6006"
@@ -70,10 +78,14 @@ services:
       context: .
     links:
       - postgresql
+      - redis
     depends_on:
       - postgresql
+      - redis
     environment:
       - NODE_ENV=testing
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_testing
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
       - AUTH_SECRET_KEY=super-secret
+      - REDIS_URL=redis://redis:6379
+      - REDIS_SECRET_KEY=i23d1553cr3t
