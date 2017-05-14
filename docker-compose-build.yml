@@ -6,7 +6,7 @@ services:
     volumes:
       - ./migrations:/docker-entrypoint-initdb.d
     ports:
-      - "5432:5432"
+      - "6666:5432"
   web:
     environment:
       - PORT=6006
