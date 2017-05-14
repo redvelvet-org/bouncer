@@ -21,6 +21,11 @@ const route = [{
   path: '/reset-password/{id}',
   handler: auth.resetPassword,
   config: config.resetPassword
+}, {
+  method: 'GET',
+  path: '/user/{id}',
+  handler: auth.profile,
+  config: config.profile
 }];
 
 module.exports = route;

@@ -15,7 +15,8 @@ const login = {
       email: validEmail.required(),
       password: validPassword.required()
     }
-  }
+  },
+  auth: false
 };
 
 const logout = {
@@ -26,7 +27,8 @@ const logout = {
     params: {
       id: validId.required()
     }
-  }
+  },
+  auth: 'jwt'
 };
 
 const resetPassword = {
@@ -41,7 +43,8 @@ const resetPassword = {
       email: validEmail.required(),
       password: validPassword.required()
     }
-  }
+  },
+  auth: 'jwt'
 };
 
 const signup = {
@@ -55,12 +58,26 @@ const signup = {
       firstName: validFirstName.required(),
       lastName: validLastName.required()
     }
-  }
+  },
+  auth: false
+};
+
+const profile = {
+  description: 'Profile',
+  notes: 'Get my profile',
+  tags: ['api'],
+  validate: {
+    params: {
+      id: validId.required()
+    }
+  },
+  auth: 'jwt'
 };
 
 module.exports = {
   login,
   logout,
   resetPassword,
-  signup
+  signup,
+  profile
 };

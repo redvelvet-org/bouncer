@@ -47,6 +47,7 @@ services:
       - NODE_ENV=development
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_development
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+      - AUTH_SECRET_KEY=super-secret
     volumes:
       - .:/usr/src/app
     build:
@@ -59,7 +60,7 @@ services:
       - postgresql
       - hajar
       - api
-    command: watchexec -e js -r node index.js | ./node_modules/.bin/bunyan
+    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
     ports:
       - "6006:6006"
   test:
@@ -75,3 +76,4 @@ services:
       - NODE_ENV=testing
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_testing
       - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
+      - AUTH_SECRET_KEY=super-secret

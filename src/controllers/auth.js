@@ -14,9 +14,14 @@ const resetPassword = (request, reply) => {
   reply(`hello ${request.params.name}`);
 };
 
+const profile = (request, reply) => {
+  reply(`hello ${request.params.name}`);
+};
+
 module.exports = {
   login,
   logout,
   signup,
-  resetPassword
+  resetPassword,
+  profile
 };
