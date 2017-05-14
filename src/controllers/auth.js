@@ -1,4 +1,6 @@
-const login = (request, reply) => {
+const { User } = require('../models');
+
+const login = async (request, reply) => {
   reply(`hello ${request.params.name}`);
 };
 
@@ -15,6 +17,8 @@ const resetPassword = (request, reply) => {
 };
 
 const profile = (request, reply) => {
+  const { token } = request.auth;
+  request.log.info('hERE', token, User);
   reply(`hello ${request.params.name}`);
 };
 

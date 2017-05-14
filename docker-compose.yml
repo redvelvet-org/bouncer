@@ -68,7 +68,7 @@ services:
       - hajar
       - api
       - redis
-    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
+    command: yarn run start | ./node_modules/.bin/bunyan
     ports:
       - "6006:6006"
   test:

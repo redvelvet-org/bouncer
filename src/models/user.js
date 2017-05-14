@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     deletedAt: { type: DataTypes.DATE, field: 'deleted_at' }
   };
   const classMethods = {
-    associate: (models, klass) => {
-      klass.hasMany(models.Todo);
+    associate: (models, instance) => {
+      // instance.hasMany(models.Todo);
     }
   };
   return sequelize.define('User', fields, {
