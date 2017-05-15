@@ -1,11 +1,17 @@
-const { User } = require('../models');
+const loginAction = require('../services/auth/login');
 
 const login = async (request, reply) => {
-  reply(`hello ${request.params.name}`);
+  try {
+    const resp = await loginAction(request.payload);
+    reply(resp);
+  } catch (ex) {
+    reply(ex);
+  }
 };
 
-const logout = (request, reply) => {
-  reply(`Hello ${request.params.name}`);
+const logout = async (request, reply) => {
+  const resp = await loginAction(request.payload);
+  reply(resp);
 };
 
 const signup = (request, reply) => {
@@ -17,8 +23,7 @@ const resetPassword = (request, reply) => {
 };
 
 const profile = (request, reply) => {
-  const { token } = request.auth;
-  request.log.info('hERE', token, User);
+  // const { token } = request.auth;
   reply(`hello ${request.params.name}`);
 };
 
