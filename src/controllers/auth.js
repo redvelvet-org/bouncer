@@ -1,4 +1,5 @@
 const loginAction = require('../services/auth/login');
+const signupAction = require('../services/auth/signup');
 
 const login = async (request, reply) => {
   try {
@@ -14,8 +15,13 @@ const logout = async (request, reply) => {
   reply(resp);
 };
 
-const signup = (request, reply) => {
-  reply(`hello ${request.params.name}`);
+const signup = async (request, reply) => {
+  try {
+    const resp = await signupAction(request.payload);
+    reply(resp);
+  } catch (ex) {
+    reply(ex);
+  }
 };
 
 const resetPassword = (request, reply) => {

@@ -1,5 +1,6 @@
 const bluebird = require('bluebird');
 const redis = require('redis');
+const Boom = require('boom');
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
@@ -7,7 +8,7 @@ bluebird.promisifyAll(redis.Multi.prototype);
 const client = redis.createClient(process.env.REDIS_URL);
 
 client.on('error', (err) => {
-  throw new Error(err);
+  throw Boom.badImplementation(err);
 });
 
 process.on('exit', (code) => {

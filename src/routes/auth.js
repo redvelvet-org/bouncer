@@ -3,7 +3,7 @@ const config = require('../validations/auth');
 
 const route = [{
   method: 'POST',
-  path: '/login/',
+  path: '/login',
   handler: auth.login,
   config: config.login
 }, {
@@ -13,7 +13,7 @@ const route = [{
   config: config.logout
 }, {
   method: 'POST',
-  path: '/signup/',
+  path: '/signup',
   handler: auth.signup,
   config: config.signup
 }, {

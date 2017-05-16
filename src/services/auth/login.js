@@ -2,10 +2,9 @@ const bcrypt = require('bcrypt');
 const Boom = require('boom');
 const jwt = require('jsonwebtoken');
 const { User } = require('../../models');
+const redis = require('../../lib/redis');
 
 const login = async ({
-  firstName,
-  lastName,
   email,
   password
 }) => {
@@ -26,9 +25,15 @@ const login = async ({
 
   const token = jwt.sign({
     userId: user.id
-  }, 'superSecret', {
+  }, process.env.AUTH_SECRET_KEY, {
     expiresIn: 60 * 60 * 7
   });
+
+  try {
+    await redis.hmset(user.id, 'token', token);
+  } catch (ex) {
+    throw Boom.badImplementation('Internal Error');
+  }
 
   return {
     success: true,
