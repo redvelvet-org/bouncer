@@ -1,50 +1,5 @@
 version: '2'
 services:
-  postgresql:
-    image: postgres:9.5
-    command: postgres
-    volumes:
-      - ./migrations:/docker-entrypoint-initdb.d
-    ports:
-      - "5439:5432"
-  redis:
-    image: redis
-    ports:
-      - "6079:6379"
-  hajar:
-    environment:
-      - PORT=6001
-      - NODE_ENV=development
-      - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_development
-      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
-    volumes:
-      - ../hajar:/usr/src/app
-    build:
-      context: ../hajar
-    links:
-      - postgresql
-    depends_on:
-      - postgresql
-    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
-    ports:
-      - "6001:6001"
-  api:
-    environment:
-      - PORT=6002
-      - NODE_ENV=development
-      - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_development
-      - DATABASE_INITIALIZATION_URI=postgres://postgres@postgresql/template1
-    volumes:
-      - ../red-api:/usr/src/app
-    build:
-      context: ../red-api
-    links:
-      - postgresql
-    depends_on:
-      - postgresql
-    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
-    ports:
-      - "6002:6002"
   web:
     environment:
       - PORT=6006
@@ -58,17 +13,7 @@ services:
       - .:/usr/src/app
     build:
       context: .
-    links:
-      - postgresql
-      - hajar
-      - api
-      - redis
-    depends_on:
-      - postgresql
-      - hajar
-      - api
-      - redis
-    command: yarn run start | ./node_modules/.bin/bunyan
+    command: watchexec -e js -r yarn run start | ./node_modules/.bin/bunyan
     ports:
       - "6006:6006"
   test:
@@ -76,12 +21,6 @@ services:
       - .:/usr/src/app
     build:
       context: .
-    links:
-      - postgresql
-      - redis
-    depends_on:
-      - postgresql
-      - redis
     environment:
       - NODE_ENV=testing
       - DATABASE_URI=postgres://redvelvet@postgresql/bouncer_testing
@@ -89,3 +28,7 @@ services:
       - AUTH_SECRET_KEY=super-secret
       - REDIS_URL=redis://redis:6379
       - REDIS_SECRET_KEY=i23d1553cr3t
+networks:
+  default:
+    external:
+      name: oaknuggins_default
