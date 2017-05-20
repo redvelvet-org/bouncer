@@ -22,6 +22,16 @@ module.exports = (sequelize, DataTypes) => {
     hash: {
       type: DataTypes.STRING
     },
+    passwordResetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'password_reset_token'
+    },
+    passwordResetSentAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'password_reset_sent_at'
+    },
     createdAt: { type: DataTypes.DATE, field: 'created_at' },
     updatedAt: { type: DataTypes.DATE, field: 'updated_at' },
     deletedAt: { type: DataTypes.DATE, field: 'deleted_at' }

@@ -5,6 +5,7 @@ const validEmail = Joi.string().email().description('Email');
 const validFirstName = Joi.string().alphanum().min(3).max(30);
 const validLastName = Joi.string().alphanum().min(3).max(30);
 const validPassword = Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/);
+const validToken = Joi.string().min(10);
 
 const login = {
   description: 'Login API',
@@ -36,15 +37,26 @@ const resetPassword = {
   notes: 'Reset user password',
   tags: ['api'],
   validate: {
-    params: {
-      id: validId.required()
+    query: {
+      resetToken: validToken.required()
     },
     payload: {
-      email: validEmail.required(),
       password: validPassword.required()
     }
   },
-  auth: 'jwt'
+  auth: false
+};
+
+const forgotPassword = {
+  description: 'Get Reset password link',
+  notes: 'Get reset password link',
+  tags: ['api'],
+  validate: {
+    payload: {
+      email: validEmail.required()
+    }
+  },
+  auth: false
 };
 
 const signup = {
@@ -78,6 +90,7 @@ module.exports = {
   login,
   logout,
   resetPassword,
+  forgotPassword,
   signup,
   profile
 };

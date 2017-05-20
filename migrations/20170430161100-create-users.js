@@ -39,7 +39,7 @@ module.exports = {
       }
     }).then(() => queryInterface.addIndex('users', ['email'], { indicesType: 'UNIQUE' }));
   },
-  down (queryInterface) {
+  down: (queryInterface) => {
     return queryInterface.dropTable('users');
   }
 };

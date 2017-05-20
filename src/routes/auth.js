@@ -18,9 +18,14 @@ const route = [{
   config: config.signup
 }, {
   method: 'POST',
-  path: '/reset-password/{id}',
+  path: '/reset-password',
   handler: auth.resetPassword,
   config: config.resetPassword
+}, {
+  method: 'POST',
+  path: '/forgot-password',
+  handler: auth.forgotPassword,
+  config: config.forgotPassword
 }, {
   method: 'GET',
   path: '/user/{id}',

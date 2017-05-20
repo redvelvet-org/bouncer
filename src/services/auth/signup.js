@@ -45,4 +45,7 @@ const signup = async ({
   };
 };
 
-module.exports = signup;
+module.exports = {
+  signup,
+  createHash
+};
