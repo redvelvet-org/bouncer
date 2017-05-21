@@ -51,7 +51,7 @@ const forgotPassword = async (request, reply) => {
 
 const profile = async (request, reply) => {
   try {
-    const resp = await profileAction(request.payload);
+    const resp = await profileAction(request.params);
     reply(resp);
   } catch (ex) {
     reply(ex);
