@@ -1,7 +1,6 @@
 ## bouncer
 
-[![Build Status](https://travis-ci.org/redvelvet-org/bouncer.svg?branch=develop)](https://travis-ci.org/redvelvet-org/bouncer)
-
+[![Build Status](https://travis-ci.org/redvelvet-org/bouncer.svg?branch=master)](https://travis-ci.org/redvelvet-org/bouncer)
 
 An API Gateway server
 
